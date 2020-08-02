@@ -19,8 +19,9 @@ services: docker
 addons:
   apt:
     packages:
-      - docker-ce
-
+# replace docker-ce by docker-compose
+#      - docker-ce
+      - docker-compose
 env:
   - MAILU_VERSION=${TRAVIS_BRANCH////-}
 # for using buildx
@@ -31,8 +32,9 @@ python:
   - "3.6"
 install:
   - pip install -r tests/requirements.txt
-  - sudo curl -L https://github.com/docker/compose/releases/download/1.23.0-rc3/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-  - sudo chmod +x /usr/local/bin/docker-compose
+# docker compose installed as a package
+#  - sudo curl -L https://github.com/docker/compose/releases/download/1.23.0-rc3/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+#  - sudo chmod +x /usr/local/bin/docker-compose
 # install buildx as the defualt docker builder
   - sudo docker buildx install
 
