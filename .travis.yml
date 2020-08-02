@@ -13,6 +13,7 @@ branches:
     # test branches, e.g. test-debian
     - /^test-[\w\-\.]+$/
 
+dist: focal
 sudo: required
 services: docker
 addons:
@@ -22,6 +23,8 @@ addons:
 
 env:
   - MAILU_VERSION=${TRAVIS_BRANCH////-}
+# for using buildx
+  - DOCKER_CLI_EXPERIMENTAL=enabled
 
 language: python
 python:
@@ -30,8 +33,11 @@ install:
   - pip install -r tests/requirements.txt
   - sudo curl -L https://github.com/docker/compose/releases/download/1.23.0-rc3/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
   - sudo chmod +x /usr/local/bin/docker-compose
+# install buildx as the defualt docker builder
+  - sudo docker buildx install
 
 before_script:
+  - docker buildx version
   - docker-compose -v
   - docker-compose -f tests/build.yml build
   - sudo -- sh -c 'mkdir -p /mailu && cp -r tests/certs /mailu && chmod 600 /mailu/certs/*'
