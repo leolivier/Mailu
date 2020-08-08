@@ -17,8 +17,8 @@ branches:
 
 os: linux
 arch:
-#  - amd64
   - armhf
+#  - amd64
 #  - arm64
 
 sudo: required
