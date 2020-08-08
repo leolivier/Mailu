@@ -18,8 +18,8 @@ branches:
 os: linux
 arch:
   - amd64
-  - arm/v7
-  - arm64/v8
+  - arm32
+  - arm64
 
 sudo: required
 services: docker
