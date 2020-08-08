@@ -44,6 +44,7 @@ install:
 
 before_script:
   # - docker-compose -f tests/build.yml build
+  - echo "tag=${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-master}"
   - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-master} core/nginx
   - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-master} core/dovecot
   - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-master} core/postfix
