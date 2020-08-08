@@ -13,7 +13,14 @@ branches:
     # test branches, e.g. test-debian
     - /^test-[\w\-\.]+$/
 
-dist: focal
+#dist: focal
+
+os: linux
+arch:
+  - amd64
+  - arm/v7
+  - arm64/v8
+
 sudo: required
 services: docker
 addons:
@@ -24,7 +31,6 @@ addons:
       - docker-compose
 env:
   - MAILU_VERSION=${TRAVIS_BRANCH////-}
-  - DOCKER_CLI_EXPERIMENTAL=enabled
 
 language: python
 python:
@@ -36,9 +42,8 @@ install:
 #  - sudo chmod +x /usr/local/bin/docker-compose
 
 before_script:
-  - docker-compose -v
   # - docker-compose -f tests/build.yml build
-  - docker build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-local} core/nginx
+  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-local} core/nginx
   - sudo -- sh -c 'mkdir -p /mailu && cp -r tests/certs /mailu && chmod 600 /mailu/certs/*'
 
 
