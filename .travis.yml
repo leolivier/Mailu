@@ -18,7 +18,7 @@ branches:
 os: linux
 arch:
   - amd64
-  - armv7
+  - arm/v7
   - arm64
 
 sudo: required
@@ -35,6 +35,7 @@ env:
 language: python
 python:
   - "3.6"
+cache: pip
 install:
   - pip install -r tests/requirements.txt
 # docker compose installed as a package
@@ -43,12 +44,12 @@ install:
 
 before_script:
   # - docker-compose -f tests/build.yml build
-  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-local} core/nginx
-  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-local} core/dovecot
-  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-local} core/postfix
-  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-local} core/rspamd
-  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-local} core/admin
-  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-local} core/none
+  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-master} core/nginx
+  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-master} core/dovecot
+  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-master} core/postfix
+  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-master} core/rspamd
+  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-master} core/admin
+  - docker build --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-master} core/none
   - sudo -- sh -c 'mkdir -p /mailu && cp -r tests/certs /mailu && chmod 600 /mailu/certs/*'
 
 
