@@ -24,7 +24,6 @@ addons:
       - docker-compose
 env:
   - MAILU_VERSION=${TRAVIS_BRANCH////-}
-# for using buildx
   - DOCKER_CLI_EXPERIMENTAL=enabled
 
 language: python
