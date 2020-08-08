@@ -35,13 +35,11 @@ install:
 # docker compose installed as a package
 #  - sudo curl -L https://github.com/docker/compose/releases/download/1.23.0-rc3/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 #  - sudo chmod +x /usr/local/bin/docker-compose
-# install buildx as the defualt docker builder
-  - sudo docker buildx install
 
 before_script:
-  - docker buildx version
   - docker-compose -v
-  - docker-compose -f tests/build.yml build
+  # - docker-compose -f tests/build.yml build
+  - docker build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --tag ${DOCKER_ORG:-mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-local} core/nginx
   - sudo -- sh -c 'mkdir -p /mailu && cp -r tests/certs /mailu && chmod 600 /mailu/certs/*'
 
 
